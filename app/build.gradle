@@ -49,6 +49,9 @@ dependencies {
   implementation "com.google.dagger:dagger-android-support:$version_dagger"
   annotationProcessor "com.google.dagger:dagger-android-processor:$version_dagger"
 
+  implementation "com.google.guava:guava:27.0.1-android"
+  implementation "com.jakewharton.timber:timber:4.7.1"
+
   testImplementation 'junit:junit:4.12'
   androidTestImplementation 'androidx.test.ext:junit:1.1.0'
   androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'

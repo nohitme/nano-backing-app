@@ -7,7 +7,7 @@ import com.squareup.moshi.Moshi;
 @AutoValue
 public abstract class Ingredient {
 
-  public abstract int quantity();
+  public abstract float quantity();
 
   public abstract String measure();
 
