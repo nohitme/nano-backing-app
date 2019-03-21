@@ -1,11 +1,12 @@
 package info.eric.nobaking.model;
 
+import android.os.Parcelable;
 import com.google.auto.value.AutoValue;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
 @AutoValue
-public abstract class Ingredient {
+public abstract class Ingredient implements Parcelable {
 
   public abstract float quantity();
 

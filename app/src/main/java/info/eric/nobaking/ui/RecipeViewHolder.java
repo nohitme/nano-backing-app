@@ -14,14 +14,23 @@ import info.eric.nobaking.recyclerview.AbstractViewHolder;
 
 public class RecipeViewHolder extends AbstractViewHolder<Recipe> {
 
-  private static Joiner commaJoiner = Joiner.on(", ");
+  public interface OnRecipeClickListener {
+
+    void onRecipeClicked(Recipe recipe);
+  }
+
+  private static final Joiner COMMA_JOINER = Joiner.on(", ");
+  private final OnRecipeClickListener onRecipeClickListener;
 
   @BindView(R.id.recipe_name) TextView nameText;
   @BindView(R.id.recipe_servings) TextView servingText;
-  @BindView(R.id.recipe_ingredients) TextView ingredientText;
+  @BindView(R.id.generic_text) TextView ingredientText;
 
-  public RecipeViewHolder(@NonNull View itemView) {
+  public RecipeViewHolder(
+      @NonNull View itemView,
+      @NonNull OnRecipeClickListener onRecipeClickListener) {
     super(itemView);
+    this.onRecipeClickListener = onRecipeClickListener;
   }
 
   @Override public void bind(Recipe item) {
@@ -31,8 +40,10 @@ public class RecipeViewHolder extends AbstractViewHolder<Recipe> {
 
     String ingredients = FluentIterable.from(item.ingredients())
         .transform(Ingredient::ingredient)
-        .join(commaJoiner);
+        .join(COMMA_JOINER);
     ingredientText.setText(context.getString(R.string.recipe_ingredients, ingredients));
+
+    itemView.setOnClickListener(v -> onRecipeClickListener.onRecipeClicked(item));
   }
 
   @Override public void unbind() {

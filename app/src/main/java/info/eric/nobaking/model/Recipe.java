@@ -1,12 +1,13 @@
 package info.eric.nobaking.model;
 
+import android.os.Parcelable;
 import com.google.auto.value.AutoValue;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import java.util.List;
 
 @AutoValue
-public abstract class Recipe {
+public abstract class Recipe implements Parcelable {
 
   public abstract int id();
 

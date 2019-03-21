@@ -30,6 +30,7 @@ dependencies {
   def version_auto_moshi = "0.4.5"
   annotationProcessor "com.ryanharter.auto.value:auto-value-moshi:$version_auto_moshi"
   compileOnly "com.ryanharter.auto.value:auto-value-moshi-annotations:$version_auto_moshi"
+  annotationProcessor "com.ryanharter.auto.value:auto-value-parcel:0.2.6"
 
   def version_okhttp3 = "3.14.0"
   implementation "com.squareup.okhttp3:okhttp:$version_okhttp3"
