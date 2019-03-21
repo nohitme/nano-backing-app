@@ -23,8 +23,13 @@ dependencies {
   implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
   implementation 'com.google.android.material:material:1.1.0-alpha04'
 
+  def version_lifecycle = "2.1.0-alpha03"
+  implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle"
+  implementation "androidx.lifecycle:lifecycle-common-java8:$version_lifecycle"
+
   annotationProcessor "com.google.auto.value:auto-value:1.5.4"
   compileOnly "com.google.auto.value:auto-value:1.5.4"
+  compileOnly "com.google.auto.factory:auto-factory:1.0-beta6"
   annotationProcessor "com.google.auto.factory:auto-factory:1.0-beta6"
 
   def version_auto_moshi = "0.4.5"
@@ -63,6 +68,11 @@ dependencies {
   implementation "com.github.bumptech.glide:okhttp3-integration:$version_glide"
   implementation "com.github.bumptech.glide:annotations:$version_glide"
   annotationProcessor "com.github.bumptech.glide:compiler:$version_glide"
+
+  def version_exoplayer = "2.9.6"
+  implementation "com.google.android.exoplayer:exoplayer-core:$version_exoplayer"
+  implementation "com.google.android.exoplayer:exoplayer-ui:$version_exoplayer"
+  implementation 'com.google.android.exoplayer:extension-okhttp:2.9.3'
 
   testImplementation 'junit:junit:4.12'
   androidTestImplementation 'androidx.test.ext:junit:1.1.0'

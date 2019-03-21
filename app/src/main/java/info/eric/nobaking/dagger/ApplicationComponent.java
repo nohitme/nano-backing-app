@@ -16,6 +16,7 @@ import javax.inject.Singleton;
         AndroidSupportInjectionModule.class,
         AndroidViewModule.class,
         ApplicationModule.class,
+        ExoPlayerModule.class,
         OkHttpModule.class,
         RecipeServiceModule.class,
         ResourceModule.class,

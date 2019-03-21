@@ -14,49 +14,49 @@ import butterknife.ButterKnife;
 import com.google.common.collect.Lists;
 import dagger.android.support.DaggerAppCompatActivity;
 import info.eric.nobaking.device.DeviceConfigurator;
-import info.eric.nobaking.model.Recipe;
 import info.eric.nobaking.model.Step;
-import info.eric.nobaking.ui.RecipeDetailsAdapter;
+import info.eric.nobaking.model.VideoUrl;
+import info.eric.nobaking.ui.StepAdapter;
+import info.eric.nobaking.ui.VideoViewHolderFactory;
 import java.util.List;
 import javax.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class RecipeActivity extends DaggerAppCompatActivity
-    implements RecipeDetailsAdapter.RecipeDetailsCallback {
+public class StepActivity extends DaggerAppCompatActivity {
 
-  private static final String EXTRA_RECIPE = "EXTRA_RECIPE";
+  private static final String EXTRA_STEP = "EXTRA_STEP";
 
   @Inject DeviceConfigurator deviceConfigurator;
+  @Inject VideoViewHolderFactory videoViewHolderFactory;
 
   @BindView(R.id.main_recycler_view) RecyclerView recyclerView;
   @BindView(R.id.main_toolbar) Toolbar toolbar;
 
-  private RecipeDetailsAdapter detailsAdapter;
-  private Recipe recipe;
+  private StepAdapter stepAdapter;
+  private Step step;
 
-  public static Intent newIntent(@NonNull Context context, @NonNull Recipe recipe) {
-    Intent intent = new Intent(context, RecipeActivity.class);
-    intent.putExtra(EXTRA_RECIPE, recipe);
+  public static Intent newIntent(@NonNull Context context, @NonNull Step step) {
+    Intent intent = new Intent(context, StepActivity.class);
+    intent.putExtra(EXTRA_STEP, step);
     return intent;
   }
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    recipe = getIntent().getParcelableExtra(EXTRA_RECIPE);
-    checkNotNull(recipe);
+    step = getIntent().getParcelableExtra(EXTRA_STEP);
+    checkNotNull(step);
 
     // we can reuse the layout
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
 
-    detailsAdapter = new RecipeDetailsAdapter(this);
-    recyclerView.setAdapter(detailsAdapter);
+    stepAdapter = new StepAdapter(this, videoViewHolderFactory);
+    recyclerView.setAdapter(stepAdapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
     setUpAdapter();
 
-    toolbar.setTitle(recipe.name());
     toolbar.setContentInsetStartWithNavigation(0);
     setSupportActionBar(toolbar);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -64,9 +64,11 @@ public class RecipeActivity extends DaggerAppCompatActivity
 
   private void setUpAdapter() {
     List<Object> list = Lists.newArrayList();
-    list.add(recipe.ingredients());
-    list.addAll(recipe.steps());
-    detailsAdapter.submitList(list);
+    if (!step.videoURL().isEmpty()) {
+      VideoUrl videoUrl = VideoUrl.create(step.videoURL());
+      list.add(videoUrl);
+    }
+    stepAdapter.submitList(list);
   }
 
   @Override
@@ -77,14 +79,5 @@ public class RecipeActivity extends DaggerAppCompatActivity
     }
 
     return super.onOptionsItemSelected(item);
-  }
-
-  @Override public void onStepClicked(Step step) {
-    if (deviceConfigurator.isDualPane()) {
-
-    } else {
-      Intent intent = StepActivity.newIntent(this, step);
-      startActivity(intent);
-    }
   }
 }
