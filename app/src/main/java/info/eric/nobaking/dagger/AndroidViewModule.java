@@ -4,6 +4,7 @@ import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import info.eric.nobaking.MainActivity;
 import info.eric.nobaking.RecipeActivity;
+import info.eric.nobaking.RecipeFragment;
 import info.eric.nobaking.StepActivity;
 
 @Module
@@ -14,6 +15,9 @@ abstract class AndroidViewModule {
 
   @ContributesAndroidInjector
   abstract RecipeActivity recipeActivity();
+
+  @ContributesAndroidInjector
+  abstract RecipeFragment recipeFragment();
 
   @ContributesAndroidInjector
   abstract StepActivity stepActivity();
