@@ -31,8 +31,13 @@ public class StepAdapter extends AbstractListAdapter<Object, AbstractViewHolder<
   @Override
   public AbstractViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
     LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-    View itemView = inflater.inflate(R.layout.item_video_player, parent, false);
-    return videoViewHolderFactory.create(itemView, lifecycleOwner);
+    if (viewType == VIEW_TYPE_VIDEO) {
+      View itemView = inflater.inflate(R.layout.item_video_player, parent, false);
+      return videoViewHolderFactory.create(itemView, lifecycleOwner);
+    } else {
+      View itemView = inflater.inflate(R.layout.item_generic_text, parent, false);
+      return new StepLongViewHolder(itemView);
+    }
   }
 
   @Override public int getItemViewType(int position) {

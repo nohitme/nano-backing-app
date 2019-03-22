@@ -55,20 +55,22 @@ public class StepActivity extends DaggerAppCompatActivity {
     stepAdapter = new StepAdapter(this, videoViewHolderFactory);
     recyclerView.setAdapter(stepAdapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    setUpAdapter();
+    stepAdapter.submitList(generateDataList());
 
     toolbar.setContentInsetStartWithNavigation(0);
     setSupportActionBar(toolbar);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
   }
 
-  private void setUpAdapter() {
+  private List<Object> generateDataList() {
     List<Object> list = Lists.newArrayList();
     if (!step.videoURL().isEmpty()) {
       VideoUrl videoUrl = VideoUrl.create(step.videoURL());
       list.add(videoUrl);
     }
-    stepAdapter.submitList(list);
+
+    list.add(step);
+    return list;
   }
 
   @Override
