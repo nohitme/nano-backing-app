@@ -30,6 +30,7 @@
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         app:layout_scrollFlags="scroll|enterAlways"
+        app:navigationIcon="@drawable/arrow_left"
         app:title="@string/app_name"
         tools:background="?colorPrimary"
         />

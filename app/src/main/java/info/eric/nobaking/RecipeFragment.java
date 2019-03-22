@@ -69,6 +69,7 @@ public class RecipeFragment extends DaggerFragment {
     unbinder = ButterKnife.bind(this, view);
     toolbar.setTitle(recipe.name());
     toolbar.setContentInsetStartWithNavigation(0);
+    toolbar.setNavigationOnClickListener(v -> requireActivity().onBackPressed());
     return view;
   }
 
@@ -76,9 +77,9 @@ public class RecipeFragment extends DaggerFragment {
       @androidx.annotation.Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     RecipeDetailsAdapter detailsAdapter = new RecipeDetailsAdapter(recipeDetailsCallback);
+    detailsAdapter.setHasStableIds(true);
     recyclerView.setAdapter(detailsAdapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-    detailsAdapter.setHasStableIds(true);
     detailsAdapter.submitList(generateDataList());
   }
 
