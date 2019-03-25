@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import butterknife.ButterKnife;
 import dagger.android.support.DaggerAppCompatActivity;
 import info.eric.nobaking.device.DeviceConfigurator;
 import info.eric.nobaking.model.Recipe;
@@ -35,18 +34,17 @@ public class RecipeActivity extends DaggerAppCompatActivity
     final Recipe recipe = getIntent().getParcelableExtra(EXTRA_RECIPE);
     checkNotNull(recipe);
 
-    setContentView(R.layout.activity_recipe);
-    ButterKnife.bind(this);
+    setContentView(R.layout.activity_single_fragment);
 
     if (getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG) == null) {
       getSupportFragmentManager().beginTransaction()
-          .add(R.id.recipe_fragment_container, RecipeFragment.newInstance(recipe), FRAGMENT_TAG)
+          .add(R.id.fragment_container, RecipeFragment.newInstance(recipe), FRAGMENT_TAG)
           .commit();
     }
   }
 
   @Override public void onStepClicked(Step step) {
-    if (deviceConfigurator.isDualPane()) {
+    if (deviceConfigurator.isTablet()) {
 
     } else {
       Intent intent = StepActivity.newIntent(this, step);
