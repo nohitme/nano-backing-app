@@ -4,4 +4,6 @@
 
   <string name="recipe_servings">servings: %d</string>
   <string name="recipe_ingredients">ingredients: %s</string>
+
+  <string name="step_no_video_url">Selected step does not have a video</string>
 </resources>

@@ -23,7 +23,9 @@ public class StepActivity extends DaggerAppCompatActivity {
 
   @Inject DeviceConfigurator deviceConfigurator;
 
-  @BindView(R.id.activity_toolbar) Toolbar toolbar;
+  @BindView(R.id.activity_toolbar)
+  @Nullable
+  Toolbar toolbar;
 
   public static Intent newIntent(@NonNull Context context, @NonNull Step step) {
     Intent intent = new Intent(context, StepActivity.class);
@@ -38,10 +40,12 @@ public class StepActivity extends DaggerAppCompatActivity {
     checkNotNull(step);
 
     // we can reuse the layout
-    setContentView(R.layout.activity_single_fragment);
+    setContentView(R.layout.activity_step);
     ButterKnife.bind(this);
-    setSupportActionBar(toolbar);
-    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    if (toolbar != null) {
+      setSupportActionBar(toolbar);
+      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
     if (getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG) == null) {
       getSupportFragmentManager().beginTransaction()
