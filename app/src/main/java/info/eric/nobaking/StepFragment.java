@@ -97,9 +97,11 @@ public class StepFragment extends DaggerFragment {
   private void setUpPlayerView(@NonNull PlayerView playerView) {
     if (step.videoURL().isEmpty()) {
       Toast.makeText(requireContext(), R.string.step_no_video_url, Toast.LENGTH_LONG).show();
+      playerView.setVisibility(View.GONE);
       return;
     }
 
+    playerView.setVisibility(View.VISIBLE);
     playerViewPresenter = playerViewPresenterFactory.create(playerView, this);
     playerViewPresenter.create(step.videoURL());
   }
