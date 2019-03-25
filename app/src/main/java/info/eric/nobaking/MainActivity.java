@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,7 +43,10 @@ public class MainActivity extends DaggerAppCompatActivity
     recipeAdapter = new RecipeAdapter(this);
     recipeAdapter.setHasStableIds(true);
     recyclerView.setAdapter(recipeAdapter);
-    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+    final int spanCount = deviceConfigurator.isTablet() ? 3 : 1;
+    final GridLayoutManager layoutManager = new GridLayoutManager(this, spanCount);
+    recyclerView.setLayoutManager(layoutManager);
 
     setSupportActionBar(toolbar);
   }
@@ -68,10 +71,7 @@ public class MainActivity extends DaggerAppCompatActivity
   }
 
   @Override public void onRecipeClicked(Recipe recipe) {
-    if (deviceConfigurator.isDualPane()) {
-    } else {
-      Intent intent = RecipeActivity.newIntent(this, recipe);
-      startActivity(intent);
-    }
+    Intent intent = RecipeActivity.newIntent(this, recipe);
+    startActivity(intent);
   }
 }
