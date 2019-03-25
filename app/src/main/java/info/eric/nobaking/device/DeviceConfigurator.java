@@ -15,7 +15,12 @@ public class DeviceConfigurator {
     this.application = application;
   }
 
-  public boolean isDualPane() {
-    return application.getResources().getBoolean(R.bool.use_dual_pane_mode);
+  /**
+   * Returns true if the device should be considered as a "tablet". Although this methodology is
+   * proven not the best way to differentiate devices (does not work for 6" phones), this is called
+   * out in the udacity UI mocks.
+   */
+  public boolean isTablet() {
+    return application.getResources().getBoolean(R.bool.is_sw600dp);
   }
 }
