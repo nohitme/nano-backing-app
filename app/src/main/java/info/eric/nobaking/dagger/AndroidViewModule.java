@@ -7,6 +7,7 @@ import info.eric.nobaking.RecipeActivity;
 import info.eric.nobaking.RecipeFragment;
 import info.eric.nobaking.StepActivity;
 import info.eric.nobaking.StepFragment;
+import info.eric.nobaking.widget.IngredientWidgetConfigureActivity;
 
 @Module
 abstract class AndroidViewModule {
@@ -25,4 +26,7 @@ abstract class AndroidViewModule {
 
   @ContributesAndroidInjector
   abstract StepFragment stepFragment();
+
+  @ContributesAndroidInjector
+  abstract IngredientWidgetConfigureActivity ingredientWidgetConfigureActivity();
 }

@@ -1,6 +1,7 @@
 <resources>
   <string name="app_name">No Baking</string>
   <string name="activity_name_step">Step Details</string>
+  <string name="activity_name_widget_configure">Select a recipe</string>
 
   <string name="recipe_servings">servings: %d</string>
   <string name="recipe_ingredients">ingredients: %s</string>

@@ -8,6 +8,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
 import info.eric.nobaking.BakingApplication;
 import info.eric.nobaking.model.RecipeServiceModule;
 import info.eric.nobaking.util.ResourceModule;
+import info.eric.nobaking.widget.IngredientWidget;
 import javax.inject.Singleton;
 
 @Singleton
@@ -22,6 +23,8 @@ import javax.inject.Singleton;
         ResourceModule.class,
     })
 public interface ApplicationComponent extends AndroidInjector<BakingApplication> {
+
+  void inject(IngredientWidget ingredientWidget);
 
   @Component.Builder
   interface Builder {

@@ -13,6 +13,7 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:supportsRtl="true"
       android:theme="@style/AppTheme">
+
     <activity android:name=".MainActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
@@ -23,7 +24,28 @@
     </activity>
 
     <activity android:name=".RecipeActivity"/>
-    <activity android:name=".StepActivity" android:label="@string/activity_name_step"/>
+    <activity
+        android:name=".StepActivity"
+        android:label="@string/activity_name_step"/>
+
+    <receiver android:name=".widget.IngredientWidget">
+      <intent-filter>
+        <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+      </intent-filter>
+
+      <meta-data
+          android:name="android.appwidget.provider"
+          android:resource="@xml/recipe_app_widget_info"/>
+    </receiver>
+
+    <activity
+        android:name=".widget.IngredientWidgetConfigureActivity"
+        android:label="@string/activity_name_widget_configure">
+      <intent-filter>
+        <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+      </intent-filter>
+    </activity>
+
   </application>
 
 </manifest>
