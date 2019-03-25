@@ -3,8 +3,12 @@ package info.eric.nobaking;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import dagger.android.support.DaggerAppCompatActivity;
 import info.eric.nobaking.device.DeviceConfigurator;
 import info.eric.nobaking.model.Recipe;
@@ -22,6 +26,8 @@ public class RecipeActivity extends DaggerAppCompatActivity
 
   @Inject DeviceConfigurator deviceConfigurator;
 
+  @BindView(R.id.activity_toolbar) Toolbar toolbar;
+
   public static Intent newIntent(@NonNull Context context, @NonNull Recipe recipe) {
     Intent intent = new Intent(context, RecipeActivity.class);
     intent.putExtra(EXTRA_RECIPE, recipe);
@@ -35,6 +41,9 @@ public class RecipeActivity extends DaggerAppCompatActivity
     checkNotNull(recipe);
 
     setContentView(R.layout.activity_single_fragment);
+    ButterKnife.bind(this);
+    setSupportActionBar(toolbar);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     if (getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG) == null) {
       getSupportFragmentManager().beginTransaction()
@@ -50,5 +59,15 @@ public class RecipeActivity extends DaggerAppCompatActivity
       Intent intent = StepActivity.newIntent(this, step);
       startActivity(intent);
     }
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    if (item.getItemId() == android.R.id.home) {
+      onBackPressed();
+      return true;
+    }
+
+    return super.onOptionsItemSelected(item);
   }
 }

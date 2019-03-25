@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -13,7 +12,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.google.common.collect.Lists;
 import dagger.android.support.DaggerFragment;
-import info.eric.nobaking.model.RecipeService;
 import info.eric.nobaking.model.Step;
 import info.eric.nobaking.model.VideoUrl;
 import info.eric.nobaking.ui.StepAdapter;
@@ -28,11 +26,9 @@ public class StepFragment extends DaggerFragment {
 
   private static final String ARGS_STEP = "ARGS_STEP";
 
-  @Inject RecipeService recipeService;
   @Inject VideoViewHolderFactory videoViewHolderFactory;
 
   @BindView(R.id.main_recycler_view) RecyclerView recyclerView;
-  @BindView(R.id.main_toolbar) Toolbar toolbar;
 
   @Nullable
   private Unbinder unbinder;
@@ -59,10 +55,8 @@ public class StepFragment extends DaggerFragment {
   public View onCreateView(@NonNull LayoutInflater inflater,
       @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_recipe, container, false);
+    View view = inflater.inflate(R.layout.fragment_single_recyclerview, container, false);
     unbinder = ButterKnife.bind(this, view);
-    toolbar.setContentInsetStartWithNavigation(0);
-    toolbar.setNavigationOnClickListener(v -> requireActivity().onBackPressed());
     return view;
   }
 

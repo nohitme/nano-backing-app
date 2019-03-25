@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -30,7 +29,6 @@ public class RecipeFragment extends DaggerFragment {
   @Inject RecipeService recipeService;
 
   @BindView(R.id.main_recycler_view) RecyclerView recyclerView;
-  @BindView(R.id.main_toolbar) Toolbar toolbar;
 
   @Nullable
   private RecipeDetailsAdapter.RecipeDetailsCallback recipeDetailsCallback;
@@ -65,11 +63,8 @@ public class RecipeFragment extends DaggerFragment {
   public View onCreateView(@NonNull LayoutInflater inflater,
       @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_recipe, container, false);
+    View view = inflater.inflate(R.layout.fragment_single_recyclerview, container, false);
     unbinder = ButterKnife.bind(this, view);
-    toolbar.setTitle(recipe.name());
-    toolbar.setContentInsetStartWithNavigation(0);
-    toolbar.setNavigationOnClickListener(v -> requireActivity().onBackPressed());
     return view;
   }
 

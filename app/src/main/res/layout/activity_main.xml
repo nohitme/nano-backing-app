@@ -28,8 +28,8 @@
         android:id="@+id/main_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_scrollFlags="scroll|enterAlways"
         android:fitsSystemWindows="true"
+        app:layout_scrollFlags="scroll|enterAlways"
         tools:background="?colorPrimary"
         tools:title="@string/app_name"
         />
