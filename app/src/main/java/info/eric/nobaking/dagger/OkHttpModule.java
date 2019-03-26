@@ -15,7 +15,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import timber.log.Timber;
 
 @Module
-class OkHttpModule {
+public class OkHttpModule {
 
   @Provides
   @Singleton

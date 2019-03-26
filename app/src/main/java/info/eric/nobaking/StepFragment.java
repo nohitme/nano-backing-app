@@ -34,7 +34,7 @@ public class StepFragment extends DaggerFragment {
   @Inject VideoViewHolderFactory videoViewHolderFactory;
   @Inject PlayerViewPresenterFactory playerViewPresenterFactory;
 
-  @BindView(R.id.main_recycler_view)
+  @BindView(R.id.step_recycler_view)
   @Nullable
   RecyclerView recyclerView;
 

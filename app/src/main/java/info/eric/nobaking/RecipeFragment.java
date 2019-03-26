@@ -28,7 +28,7 @@ public class RecipeFragment extends DaggerFragment {
 
   @Inject RecipeService recipeService;
 
-  @BindView(R.id.main_recycler_view) RecyclerView recyclerView;
+  @BindView(R.id.recipe_recycler_view) RecyclerView recyclerView;
 
   @Nullable
   private RecipeDetailsAdapter.RecipeDetailsCallback recipeDetailsCallback;

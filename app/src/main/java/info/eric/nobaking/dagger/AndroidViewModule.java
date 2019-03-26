@@ -10,7 +10,7 @@ import info.eric.nobaking.StepFragment;
 import info.eric.nobaking.widget.IngredientWidgetConfigureActivity;
 
 @Module
-abstract class AndroidViewModule {
+public abstract class AndroidViewModule {
 
   @ContributesAndroidInjector
   abstract MainActivity mainActivity();
