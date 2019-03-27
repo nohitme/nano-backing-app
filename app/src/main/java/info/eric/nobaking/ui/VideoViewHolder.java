@@ -3,7 +3,6 @@ package info.eric.nobaking.ui;
 import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.DefaultLifecycleObserver;
-import androidx.lifecycle.LifecycleOwner;
 import butterknife.BindView;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.auto.factory.AutoFactory;
@@ -17,7 +16,7 @@ import javax.annotation.Nullable;
 public class VideoViewHolder extends AbstractViewHolder<VideoUrl> implements
     DefaultLifecycleObserver {
 
-  private final LifecycleOwner lifecycleOwner;
+  private final VideoViewCallback callback;
   private final PlayerViewPresenterFactory playerViewPresenterFactory;
 
   @BindView(R.id.step_player_view) PlayerView playerView;
@@ -26,22 +25,26 @@ public class VideoViewHolder extends AbstractViewHolder<VideoUrl> implements
 
   public VideoViewHolder(
       @NonNull View itemView,
-      @NonNull LifecycleOwner lifecycleOwner,
+      @NonNull VideoViewCallback callback,
       @Provided PlayerViewPresenterFactory playerViewPresenterFactory) {
     super(itemView);
-    this.lifecycleOwner = lifecycleOwner;
+    this.callback = callback;
     this.playerViewPresenterFactory = playerViewPresenterFactory;
   }
 
   @Override public void bind(VideoUrl item) {
-    lifecycleOwner.getLifecycle().addObserver(this);
-    playerViewPresenter = playerViewPresenterFactory.create(playerView, lifecycleOwner);
-    playerViewPresenter.create(item.url());
+    playerViewPresenter = playerViewPresenterFactory.create(playerView);
+    playerViewPresenter.create(item.url(), item.position());
   }
 
   @Override public void unbind() {
     if (playerViewPresenter != null) {
+      callback.updatePlayedPosition(playerViewPresenter.getPlayedPosition());
       playerViewPresenter.destroy();
     }
+  }
+
+  public interface VideoViewCallback {
+    void updatePlayedPosition(long position);
   }
 }

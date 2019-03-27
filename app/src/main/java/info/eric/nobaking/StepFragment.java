@@ -27,9 +27,10 @@ import javax.inject.Inject;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
-public class StepFragment extends DaggerFragment {
+public class StepFragment extends DaggerFragment implements StepAdapter.StepAdapterCallback {
 
   private static final String ARGS_STEP = "ARGS_STEP";
+  private static final String STATE_POSITION = "STATE_POSITION";
 
   @Inject VideoViewHolderFactory videoViewHolderFactory;
   @Inject PlayerViewPresenterFactory playerViewPresenterFactory;
@@ -48,6 +49,7 @@ public class StepFragment extends DaggerFragment {
   private PlayerViewPresenter playerViewPresenter;
 
   private Step step;
+  private long playedPosition;
 
   public static StepFragment newInstance(@NonNull Step step) {
     StepFragment fragment = new StepFragment();
@@ -74,9 +76,8 @@ public class StepFragment extends DaggerFragment {
     return view;
   }
 
-  @Override public void onViewCreated(@NonNull View view,
-      @androidx.annotation.Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
+  @Override public void onResume() {
+    super.onResume();
     // sanity check
     checkState(recyclerView != null || playerView != null);
 
@@ -84,6 +85,32 @@ public class StepFragment extends DaggerFragment {
       setUpRecyclerView(recyclerView);
     } else {
       setUpPlayerView(playerView);
+    }
+  }
+
+  @Override public void onPause() {
+    super.onPause();
+    if (playerViewPresenter != null) {
+      updatePlayedPosition(playerViewPresenter.getPlayedPosition());
+      playerViewPresenter.destroy();
+    }
+
+    if (recyclerView != null) {
+      // this will cause the view holder to be unbound so we have the right position saved
+      recyclerView.setAdapter(null);
+    }
+  }
+
+  @Override public void onSaveInstanceState(@NonNull Bundle outState) {
+    super.onSaveInstanceState(outState);
+    outState.putLong(STATE_POSITION, playedPosition);
+  }
+
+  @Override
+  public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+    super.onViewStateRestored(savedInstanceState);
+    if (savedInstanceState != null) {
+      playedPosition = savedInstanceState.getLong(STATE_POSITION);
     }
   }
 
@@ -102,14 +129,14 @@ public class StepFragment extends DaggerFragment {
     }
 
     playerView.setVisibility(View.VISIBLE);
-    playerViewPresenter = playerViewPresenterFactory.create(playerView, this);
-    playerViewPresenter.create(step.videoURL());
+    playerViewPresenter = playerViewPresenterFactory.create(playerView);
+    playerViewPresenter.create(step.videoURL(), playedPosition);
   }
 
   private List<Object> generateDataList() {
     List<Object> list = Lists.newArrayList();
     if (!step.videoURL().isEmpty()) {
-      VideoUrl videoUrl = VideoUrl.create(step.videoURL());
+      VideoUrl videoUrl = VideoUrl.create(step.videoURL(), playedPosition);
       list.add(videoUrl);
     }
 
@@ -119,12 +146,13 @@ public class StepFragment extends DaggerFragment {
 
   @Override public void onDestroyView() {
     super.onDestroyView();
-    if (playerViewPresenter != null) {
-      playerViewPresenter.destroy();
-    }
-
     if (unbinder != null) {
       unbinder.unbind();
     }
+  }
+
+  @Override
+  public void updatePlayedPosition(long position) {
+    playedPosition = position;
   }
 }

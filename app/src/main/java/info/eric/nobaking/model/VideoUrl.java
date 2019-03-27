@@ -7,7 +7,9 @@ public abstract class VideoUrl {
 
   public abstract String url();
 
-  public static VideoUrl create(String url) {
-    return new AutoValue_VideoUrl(url);
+  public abstract long position();
+
+  public static VideoUrl create(String url, long position) {
+    return new AutoValue_VideoUrl(url, position);
   }
 }

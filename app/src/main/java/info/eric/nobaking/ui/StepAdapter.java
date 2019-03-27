@@ -4,7 +4,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.DiffUtil;
 import com.google.common.base.Objects;
 import info.eric.nobaking.R;
@@ -17,12 +16,12 @@ public class StepAdapter extends AbstractListAdapter<Object, AbstractViewHolder<
   private static final int VIEW_TYPE_VIDEO = 0;
   private static final int VIEW_TYPE_STEP = 1;
 
-  private final LifecycleOwner lifecycleOwner;
+  private final StepAdapterCallback callback;
   private final VideoViewHolderFactory videoViewHolderFactory;
 
-  public StepAdapter(LifecycleOwner lifecycleOwner, VideoViewHolderFactory videoViewHolderFactory) {
+  public StepAdapter(StepAdapterCallback callback, VideoViewHolderFactory videoViewHolderFactory) {
     super(ITEM_CALLBACK);
-    this.lifecycleOwner = lifecycleOwner;
+    this.callback = callback;
     this.videoViewHolderFactory = videoViewHolderFactory;
   }
 
@@ -33,7 +32,7 @@ public class StepAdapter extends AbstractListAdapter<Object, AbstractViewHolder<
     LayoutInflater inflater = LayoutInflater.from(parent.getContext());
     if (viewType == VIEW_TYPE_VIDEO) {
       View itemView = inflater.inflate(R.layout.item_video_player, parent, false);
-      return videoViewHolderFactory.create(itemView, lifecycleOwner);
+      return videoViewHolderFactory.create(itemView, callback);
     } else {
       View itemView = inflater.inflate(R.layout.item_generic_text, parent, false);
       return new StepLongViewHolder(itemView);
@@ -43,6 +42,10 @@ public class StepAdapter extends AbstractListAdapter<Object, AbstractViewHolder<
   @Override public int getItemViewType(int position) {
     Object item = getItem(position);
     return item instanceof Step ? VIEW_TYPE_STEP : VIEW_TYPE_VIDEO;
+  }
+
+  public interface StepAdapterCallback extends VideoViewHolder.VideoViewCallback {
+
   }
 
   private static final DiffUtil.ItemCallback<Object> ITEM_CALLBACK =
